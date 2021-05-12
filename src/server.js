@@ -2,10 +2,22 @@ import express from 'express';
 import cors from 'cors';
 import path from 'path';
 import morgan from 'morgan';
+import mongoose from 'mongoose';
+import apiRouter from './router';
 
 // initialize
 const app = express();
 
+// DB Setup
+const mongoURI = process.env.MONGODB_URI || 'mongodb://localhost/platform_db';
+
+mongoose.connect(mongoURI).then(() => {
+  console.log('connected to database:', mongoURI);
+}).catch((err) => {
+  console.log('error: could not connect to db:', err);
+});
+
+mongoose.set('useFindAndModify', false);
 // enable/disable cross origin resource sharing if necessary
 app.use(cors());
 
@@ -25,6 +37,8 @@ app.set('views', path.join(__dirname, '../src/views'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json()); // To parse the incoming requests with JSON payloads
 
+app.use('/api', apiRouter);
+
 // additional init stuff should go before hitting the routing
 
 // default index route
@@ -33,7 +47,6 @@ app.get('/', (req, res) => {
 });
 
 // START THE SERVER
-// =============================================================================
 const port = process.env.PORT || 9090;
 app.listen(port);
 
