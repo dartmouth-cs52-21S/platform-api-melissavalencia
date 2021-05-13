@@ -1,13 +1,14 @@
 # Title
+An Express and Mongodb CRUD api server for [Stuntin](https://stuntin.netlify.app/) frontend.
 
 *description*
 
-[deployed url](http://url-if-deployed-here)
+[deployed url](https://stuntin.herokuapp.com/api/posts)
 
 ## What Worked Well
-
+I understood what I was doing and was able to identify where some of my code's bugs were/what was going wrong.
 ## What Didn't
-
+I struggled a bit with making sure I had all the routes set up correctly and sending the expected objects. 
 ## Extra Credit
 
 ## Screenshots
