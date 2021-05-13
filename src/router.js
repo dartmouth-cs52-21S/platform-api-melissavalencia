@@ -3,9 +3,9 @@ import * as Posts from './controllers/post_controller';
 
 const router = Router();
 
-// router.get('/', (req, res) => {
-//   res.json({ message: 'welcome to our blog api!' });
-// });
+router.get('/', (req, res) => {
+  res.json({ message: 'welcome to our blog api!' });
+});
 
 // const fetchPosts = async (req, res) => {
 //   try {
