@@ -42,9 +42,9 @@ app.use('/api', apiRouter);
 // additional init stuff should go before hitting the routing
 
 // default index route
-app.get('/', (req, res) => {
-  res.send('hi');
-});
+// app.get('/', (req, res) => {
+//   res.send('hi');
+// });
 
 // START THE SERVER
 const port = process.env.PORT || 9090;
