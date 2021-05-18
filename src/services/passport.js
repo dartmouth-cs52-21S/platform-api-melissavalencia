@@ -34,11 +34,15 @@ const localLogin = new LocalStrategy(localOptions, async (email, password, done)
     return done(error);
   }
 
+  // if user not found
   if (!user) {
+    // user not in database so returns false
     return done(null, false);
-  } else if (!isMatch) {
+  } else if (!isMatch) { //
+    // user password not a match so returns false
     return done(null, false);
   } else {
+    // runs done with no error if user found password match and with user object
     return done(null, user);
   }
 });
@@ -51,9 +55,12 @@ const jwtLogin = new JwtStrategy(jwtOptions, async (payload, done) => {
   } catch (error) {
     done(error, false);
   }
+  // if user exists in database
   if (user) {
+    // run done with user object
     done(null, user);
   } else {
+    // run done with false if no user
     done(null, false);
   }
 });
