@@ -1,5 +1,7 @@
 import { Router } from 'express';
 import * as Posts from './controllers/post_controller';
+import * as UserController from './controllers/user_controller';
+import { requireAuth, requireSignin } from './services/passport';
 
 const router = Router();
 
@@ -62,9 +64,9 @@ router.route('/posts')
       res.status(500).json({ error });
     }
   })
-  .post(async (req, res) => {
+  .post(requireAuth, async (req, res) => {
     try {
-      const create = await Posts.createPost(req.body);
+      const create = await Posts.createPost({ ...req.body, author: req.user.id });
       res.json({ create });
     } catch (error) {
       res.status(500).json({ error });
@@ -76,11 +78,13 @@ router.route('/posts/:id')
     try {
       const post = await Posts.getPost(req.params.id);
       res.json(post);
+      console.log('in get');
     } catch (error) {
+      console.log(error);
       res.status(500).json({ error });
     }
   })
-  .put(async (req, res) => {
+  .put(requireAuth, async (req, res) => {
     try {
       await Posts.updatePost(req.params.id, req.body);
       const post = await Posts.getPost(req.params.id);
@@ -89,7 +93,7 @@ router.route('/posts/:id')
       res.status(500).json({ error });
     }
   })
-  .delete(async (req, res) => {
+  .delete(requireAuth, async (req, res) => {
     try {
       const remove = await Posts.deletePost(req.params.id);
       res.json({ remove });
@@ -97,5 +101,23 @@ router.route('/posts/:id')
       res.status(500).json({ error });
     }
   });
+
+router.post('/signin', requireSignin, async (req, res) => {
+  try {
+    const token = UserController.signin(req.user);
+    res.json({ token, email: req.user.email });
+  } catch (error) {
+    res.status(422).send({ error: error.toString() });
+  }
+});
+
+router.post('/signup', async (req, res) => {
+  try {
+    const token = await UserController.signup(req.body);
+    res.json({ token, email: req.body.email });
+  } catch (error) {
+    res.status(422).send({ error: error.toString() });
+  }
+});
 
 export default router;
