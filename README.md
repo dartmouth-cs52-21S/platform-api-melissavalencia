@@ -5,6 +5,10 @@ An Express and Mongodb CRUD api server for [Stuntin](https://stuntin.netlify.app
 
 [deployed url](https://stuntin.herokuapp.com/api/posts)
 
+Now with authentication set up for [Stuntin](https://stuntin-with-auth.netlify.app/) frontend.
+
+[deployed url](https://stuntin-with-auth.herokuapp.com/api/posts)
+
 ## What Worked Well
 I understood what I was doing and was able to identify where some of my code's bugs were/what was going wrong.
 ## What Didn't
